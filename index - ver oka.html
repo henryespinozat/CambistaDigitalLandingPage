@@ -89,12 +89,9 @@
     /* Calculadora */
     .calculator { background: white; padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
     .calculator__rates { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-lg); }
-	
-	.rate-box { background: var(--color-bg-alt); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); text-align: center; flex: 1; border: 2px solid transparent; transition: all var(--transition); }
-    .rate-box--active { background-color: #EAF7ED; border-color: var(--color-primary); box-shadow: 0 4px 6px -1px rgba(35, 196, 103, 0.15); }
+    .rate-box { background: var(--color-bg-alt); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); text-align: center; flex: 1; }
     .rate-box__label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600; }
     .rate-box__value { font-weight: 700; color: var(--color-accent); margin-top: 2px; }
-	
     .calculator__field { border: 1px solid var(--color-border); padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-sm); }
     .calculator__label { font-size: 0.8rem; color: var(--color-text-muted); display: block; margin-bottom: 2px; }
     .calculator__input { font-size: 1.25rem; font-weight: 700; border: none; width: 100%; outline: none; }
@@ -189,43 +186,23 @@
         </div>
 
         <div class="calculator">
-			<div class="calculator__rates">
-			  <div class="rate-box" id="box-buy">
-				<p class="rate-box__label">Compra</p>
-				<p class="rate-box__value" id="rate-buy">Cargando...</p>
-			  </div>
-			  <div class="rate-box" id="box-sell">
-				<p class="rate-box__label">Venta</p>
-				<p class="rate-box__value" id="rate-sell">Cargando...</p>
-			  </div>
-			</div>
+          <div class="calculator__rates">
+            <div class="rate-box"><p class="rate-box__label">Compra</p><p class="rate-box__value" id="rate-buy">Cargando...</p></div>
+            <div class="rate-box"><p class="rate-box__label">Venta</p><p class="rate-box__value" id="rate-sell">Cargando...</p></div>
+          </div>
           
           <!-- AQUÍ ESTABAN LOS IDS FALTANTES -->
-			<div class="calculator__field">
-			  <div>
-				<span class="calculator__label" id="label-send">Tú envías</span>
-				<div style="display: flex; align-items: center; gap: 4px;">
-				  <span id="symbol-send" style="font-size: 1.25rem; font-weight: 700;">$</span>
-				  <input type="text" id="input-send" class="calculator__input" value="1000">
-				</div>
-			  </div>
-			  <div class="calculator__currency" id="currency-send">USD </div>
-			</div>
-
-			<div class="calculator__swap">
-			  <button type="button" id="swap-btn" class="calculator__swap-btn">⇅</button>
-			</div>
-
-			<div class="calculator__field">
-			  <div>
-				<span class="calculator__label" id="label-receive">Tú recibes</span>
-				<div style="display: flex; align-items: center; gap: 4px;">
-				  <span id="symbol-receive" style="font-size: 1.25rem; font-weight: 700;">S/</span>
-				  <input type="text" id="input-receive" class="calculator__input" value="3755.00">
-				</div>
-			  </div>
-			  <div class="calculator__currency" id="currency-receive">PEN </div>
-			</div>
+          <div class="calculator__field">
+            <div><span class="calculator__label" id="label-send">Tú envías</span><input type="text" id="input-send" class="calculator__input" value="1000"></div>
+            <div class="calculator__currency" id="currency-send">USD ▾</div>
+          </div>
+          
+          <div class="calculator__swap"><button type="button" id="swap-btn" class="calculator__swap-btn">⇅</button></div>
+          
+          <div class="calculator__field">
+            <div><span class="calculator__label" id="label-receive">Tú recibes</span><input type="text" id="input-receive" class="calculator__input" value="3755.00"></div>
+            <div class="calculator__currency" id="currency-receive">PEN ▾</div>
+          </div>
           
           <a href="https://wa.me/51941594707" target="_blank" rel="noopener noreferrer" class="button button--primary calculator__cta">Cotizar por WhatsApp</a>
           <p class="calculator__disclaimer">Tipo de cambio referencial. Sujeto a variaciones del mercado.</p>
@@ -290,7 +267,7 @@
   <footer class="footer" id="contacto">
     <div class="container footer__container">
       <div class="footer__brand">
-        <h2 style="color:white">Cambista Digital SAC</h2>
+        <h2 style="color:white">Cambista Digital</h2>
         <p class="footer__brand-text">Tu mejor aliado en el cambio de divisas online en Perú.</p>
       </div>
       <div>
@@ -317,7 +294,7 @@
         </ul>
       </div>
     </div>
-    <div class="container footer__bottom">&copy; 2026 Cambista Digital SAC. Todos los derechos reservados.</div>
+    <div class="container footer__bottom">&copy; 2026 Cambista Digital. Todos los derechos reservados.</div>
   </footer>
 
   <script>
@@ -342,8 +319,8 @@
       if (data && data.rates && data.rates.PEN) {
         const baseRate = data.rates.PEN;
         
-        currentBuyRate = (baseRate - 0.005).toFixed(3);
-        currentSellRate = (baseRate + 0.01).toFixed(3);
+        currentBuyRate = (baseRate - 0.03).toFixed(3);
+        currentSellRate = (baseRate + 0.03).toFixed(3);
 
         document.getElementById('rate-buy').textContent = `S/ ${currentBuyRate}`;
         document.getElementById('rate-sell').textContent = `S/ ${currentSellRate}`;
@@ -356,29 +333,10 @@
     calculateFromSend();
   }
 
-// Actualiza los textos de monedas (USD/PEN) y los símbolos ($/S/)
-// Actualiza los textos de monedas (USD/PEN), símbolos y resalta la tasa activa
+  // Actualiza los textos de monedas (USD/PEN) según el sentido de la operación
   function updateUI() {
-    document.getElementById('currency-send').textContent = isUsdToPen ? 'USD' : 'PEN';
-    document.getElementById('currency-receive').textContent = isUsdToPen ? 'PEN' : 'USD';
-    
-    // Actualizamos los símbolos dinámicamente
-    document.getElementById('symbol-send').textContent = isUsdToPen ? '$' : 'S/';
-    document.getElementById('symbol-receive').textContent = isUsdToPen ? 'S/' : '$';
-
-    // Lógica para resaltar Compra o Venta
-    const boxBuy = document.getElementById('box-buy');
-    const boxSell = document.getElementById('box-sell');
-
-    if (isUsdToPen) {
-      // El cliente envía USD, por lo tanto la casa de cambio "Compra"
-      boxBuy.classList.add('rate-box--active');
-      boxSell.classList.remove('rate-box--active');
-    } else {
-      // El cliente envía PEN, por lo tanto la casa de cambio "Vende"
-      boxSell.classList.add('rate-box--active');
-      boxBuy.classList.remove('rate-box--active');
-    }
+    document.getElementById('currency-send').textContent = isUsdToPen ? 'USD ▾' : 'PEN ▾';
+    document.getElementById('currency-receive').textContent = isUsdToPen ? 'PEN ▾' : 'USD ▾';
   }
 
   // Calcula el monto a recibir cuando el usuario escribe cuánto va a enviar
