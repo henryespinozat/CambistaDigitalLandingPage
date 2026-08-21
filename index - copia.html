@@ -140,19 +140,13 @@
     .service-card__icon { width: 48px; height: 48px; background-color: rgba(35, 196, 103, 0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border-radius: var(--radius-sm); margin-bottom: var(--space-md); }
 
     /* Footer */
-    .footer { background-color: #1E293B; color: #F8FAFC; padding: 64px 0 32px; }
-    .footer__container { display: grid; gap: 48px; grid-template-columns: 1fr; }
-    .footer__title { font-size: 1.1rem; margin-bottom: 16px; color: #23C467; }
-    .footer__links { display: flex; flex-direction: column; gap: 8px; }
-    .footer__link { color: #CBD5E1; transition: color 200ms ease; }
-    .footer__link:hover { color: #23C467; }
-    
-    /* Social Icons Container - Increased margin-top for better spacing */
-    .footer__socials { display: flex; gap: 16px; margin-top: 24px; }
-    .social-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background-color: #334155; border-radius: 50%; color: white; transition: background-color 200ms ease; }
-    .social-icon:hover { background-color: #23C467; }
-
-    .footer__bottom { margin-top: 64px; padding-top: 32px; border-top: 1px solid #334155; text-align: center; color: #64748B; font-size: 0.85rem; }
+    .footer { background-color: var(--color-text); color: var(--color-bg); padding: var(--space-2xl) 0 var(--space-lg); }
+    .footer__container { display: grid; gap: var(--space-xl); grid-template-columns: 1fr; }
+    .footer__title { font-size: 1.1rem; margin-bottom: var(--space-md); color: var(--color-primary); }
+    .footer__links { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .footer__link { color: #CBD5E1; transition: color var(--transition); }
+    .footer__link:hover { color: var(--color-primary); }
+    .footer__bottom { margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: 1px solid #334155; text-align: center; color: var(--color-text-muted); font-size: 0.85rem; }
 	
 	.header__cta { display: none; }
 	
@@ -174,7 +168,7 @@
       .allied__container { grid-template-columns: 1fr 1fr; }
 
       .services__grid { grid-template-columns: repeat(2, 1fr); }
-      .footer__container { grid-template-columns: 2fr 1fr 1fr; }
+      .footer__container { grid-template-columns: 2fr 1fr 1fr 1fr; }
     }
 
     @media (min-width: 1024px) {
@@ -331,44 +325,42 @@
     </section>
   </main>
 
-	<footer class="footer" id="contacto">
-		<div class="container footer__container">
-		  <div class="footer__brand">
-			<h2 style="color:white; margin-bottom: 16px;">Cambista Digital SAC</h2>
-			<p style="margin-bottom: 8px; color: #CBD5E1;">Tu mejor aliado en el cambio de divisas online en Perú.</p>
-			<p style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.4;">
-			  <strong>RUC:</strong> 20604967393<br>
-			  <strong>Resolución SBS:</strong> N° 00171-2025
-			</p>
-		  </div>
-
-		  <div>
-			<h3 class="footer__title">Legal</h3>
-			<ul class="footer__links">
-			  <li><a href="#" class="footer__link">Términos y condiciones</a></li>
-			  <li><a href="#" class="footer__link">Política de privacidad</a></li>
-			</ul>
-		  </div>
-
-		  <div>
-			<h3 class="footer__title">Contacto y Redes</h3>
-			<ul class="footer__links">
-			  <li><a href="https://wa.me/51941594707" target="_blank" rel="noopener noreferrer" class="footer__link">WhatsApp: +51 941 594 707</a></li>
-			  <li><a href="mailto:atencion@cambistadigital.pe" class="footer__link">atencion@cambistadigital.pe</a></li>
-			</ul>
-			
-			<div class="footer__socials">
-			  <a href="https://www.facebook.com/cambistadigital" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
-				 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.325-.593 1.325-1.325V1.325C24 .593 23.407 0 22.675 0z"/></svg>
-			  </a>
-			  <a href="https://www.instagram.com/cambistadigitalsac" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-				 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.13.052 1.745.241 2.155.4.542.211.928.463 1.332.868.405.405.657.79.868 1.332.158.41.348 1.025.4 2.155.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.052 1.13-.241 1.745-.4 2.155-.211.542-.463.928-.868 1.332-.405.405-.79.657-1.332.868-.41.158-1.025.348-2.155.4-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.13-.052-1.745-.241-2.155-.4-.542-.211-.928-.463-1.332-.868-.405-.405-.657-.79-.868-1.332-.158-.41-.348-1.025-.4-2.155-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.052-1.13.241-1.745.4-2.155.463-.928.79-1.332.868-1.332.405-.405.79-.657 1.332-.868.41-.158 1.025-.348 2.155-.4 1.266-.058 1.646-.07 4.85-.07m0-2.163c-3.259 0-3.667.014-4.947.072-1.276.058-2.148.261-2.912.56-1.144.444-2.106 1.042-3.076 2.012-.97.97-1.568 1.932-2.012 3.076-.299.764-.502 1.636-.56 2.912-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.276.261 2.148.56 2.912.444 1.144 1.042 2.106 2.012 3.076.97.97 1.932 1.568 3.076 2.012.764.299 1.636.502 2.912.56 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.276-.058 2.148-.261 2.912-.56 1.144-.444 2.106-1.042 3.076-2.012.97-.97 1.568-1.932 2.012-3.076.299-.764.502-1.636.56-2.912.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.058-1.276-.261-2.148-.56-2.912-.444-1.144-1.042-2.106-2.012-3.076-.97-.97-1.932-1.568-3.076-2.012-.764-.299-1.636-.502-2.912-.56-1.28-.058-1.688-.072-4.947-.072zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162m0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4m6.406-11.845c0 .795-.644 1.44-1.44 1.44-.795 0-1.44-.644-1.44-1.44 0-.795.644-1.44 1.44-1.44.795 0 1.44.644 1.44 1.44z"/></svg>
-			  </a>
-			</div>
-		  </div>
-		</div>
-		<div class="container footer__bottom">&copy; 2026 Cambista Digital SAC. Todos los derechos reservados.</div>
-	  </footer>
+  <footer class="footer" id="contacto">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <h2 style="color:white">Cambista Digital SAC</h2>
+        <p class="footer__brand-text" style="margin-bottom: 8px;">Tu mejor aliado en el cambio de divisas online en Perú.</p>
+        <p style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.4;">
+          <strong>RUC:</strong> 20604967393<br>
+          <strong>Resolución SBS:</strong> N° 03379-2025
+        </p>
+      </div>
+      <div>
+        <h3 class="footer__title">Navegación</h3>
+        <ul class="footer__links">
+          <li><a href="#inicio" class="footer__link">Inicio</a></li>
+          <li><a href="#servicios" class="footer__link">Servicios</a></li>
+          <li><a href="#contacto" class="footer__link">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer__title">Legal</h3>
+        <ul class="footer__links">
+          <li><a href="#" class="footer__link">Términos y condiciones</a></li>
+          <li><a href="#" class="footer__link">Política de privacidad</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer__title">Contacto</h3>
+        <ul class="footer__links">
+          <li><a href="https://wa.me/51941594707" target="_blank" rel="noopener noreferrer" class="footer__link">WhatsApp: +51 941 594 707</a></li>
+          <li><span class="footer__link" style="color: #CBD5E1; cursor: default;">Celular: 941 594 707</span></li>
+          <li><a href="mailto:atencion@cambistadigital.pe" class="footer__link">Correo: atencion@cambistadigital.pe</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer__bottom">&copy; 2026 Cambista Digital SAC. Todos los derechos reservados.</div>
+  </footer>
 
   <script>
     const menuToggle = document.getElementById('menu-toggle');
