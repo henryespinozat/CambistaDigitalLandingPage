@@ -380,29 +380,73 @@
   </script>
 
   <script>
-  let currentBuyRate = 3.755;
-  let currentSellRate = 3.785;
+  let currentBuyRate = 3.10;
+  let currentSellRate = 3.80;
   let isUsdToPen = true; 
 
   async function fetchExchangeRate() {
-    try {
-      // Agregamos Date.now() para evitar que el navegador o Cloudflare devuelvan el caché
-      const response = await fetch(`https://open.er-api.com/v6/latest/USD?t=${Date.now()}`);
-      const data = await response.json();
-      
-      if (data && data.rates && data.rates.PEN) {
-        const baseRate = data.rates.PEN;
-        
-        currentBuyRate = (baseRate - 0.005).toFixed(3);
-        currentSellRate = (baseRate + 0.01).toFixed(3);
+    let refBuy = null;
+    let refSell = null;
 
-        document.getElementById('rate-buy').textContent = `S/ ${currentBuyRate}`;
-        document.getElementById('rate-sell').textContent = `S/ ${currentSellRate}`;
+    // -------------------------------------------------------------
+    // 1. INTENTO PRINCIPAL: Cambio Mundial
+    // -------------------------------------------------------------
+    // 1. INTENTO PRINCIPAL: Cambio Mundial a través de Proxy CORS
+    try {
+      const targetUrl = 'https://www.cambiomundial.com/backend/tasaCambio/daily';
+      // Usamos el endpoint /raw de AllOrigins para recibir directamente el JSON
+      const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}&t=${Date.now()}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const rateData = data.find(item => item.tipoTasa === 'REGULAR') || data[0];
+          if (rateData && rateData.buy && rateData.sell) {
+            refBuy = rateData.buy;
+            refSell = rateData.sell;
+          }
+        }
       }
     } catch (error) {
-      console.error('Error al obtener el tipo de cambio:', error);
+      console.warn('API de Cambio Mundial (Proxy) no disponible, intentando respaldo...', error);
     }
-    
+
+    // -------------------------------------------------------------
+    // 2. INTENTO SECUNDARIO (FALLBACK): Cloudfront
+    // -------------------------------------------------------------
+    if (refBuy === null || refSell === null) {
+      try {
+        const responseFallback = await fetch(`https://d3vgue6qs1bq0c.cloudfront.net/exchange/current.json?t=${Date.now()}`);
+        if (responseFallback.ok) {
+          const jsonFallback = await responseFallback.json();
+          if (jsonFallback && jsonFallback.statusCode === 200 && jsonFallback.data && jsonFallback.data.length > 0) {
+            // Buscamos "Cambio Mundial" o tomamos el primer elemento disponible de la lista
+            const reference = jsonFallback.data.find(item => item.title === 'Cambio Mundial') || jsonFallback.data[0];
+            if (reference && reference.rates) {
+              refBuy = parseFloat(reference.rates.buy.cost);
+              refSell = parseFloat(reference.rates.sale.cost);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error en el API de respaldo:', error);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 3. PROCESAMIENTO Y ACTUALIZACIÓN DE INTERFAZ
+    // -------------------------------------------------------------
+    if (refBuy !== null && refSell !== null) {
+      // Aplicamos tus márgenes
+      currentBuyRate = (refBuy - 0.002).toFixed(3);
+      currentSellRate = (refSell + 0.01).toFixed(3);
+
+      document.getElementById('rate-buy').textContent = `S/ ${currentBuyRate}`;
+      document.getElementById('rate-sell').textContent = `S/ ${currentSellRate}`;
+    } else {
+      console.error('No se pudo obtener el tipo de cambio de ninguna de las fuentes.');
+    }
+
     updateUI();
     calculateFromSend();
   }
