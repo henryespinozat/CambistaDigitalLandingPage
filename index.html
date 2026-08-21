@@ -263,7 +263,10 @@
 			  </svg>
 			  Enviar cotización
 			</a>
-		  <p class="calculator__disclaimer">Tipo de cambio referencial. Sujeto a variaciones del mercado.</p>
+		  <p class="calculator__disclaimer">
+			  Tipo de cambio referencial. Sujeto a variaciones del mercado.<br>
+			  <span id="last-update" style="color: var(--color-primary); font-weight: 500;"></span>
+			</p>
         </div>
       </div>
     </section>
@@ -441,8 +444,21 @@
 
       document.getElementById('rate-buy').textContent = `S/ ${currentBuyRate}`;
       document.getElementById('rate-sell').textContent = `S/ ${currentSellRate}`;
+	  
+	  // AQUÍ: Solo actualizamos la fecha/hora si realmente obtuvimos datos nuevos con éxito
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const dateString = now.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      
+      const lastUpdateEl = document.getElementById('last-update');
+      if (lastUpdateEl) {
+        lastUpdateEl.textContent = `Última actualización: ${dateString} ${timeString}`;
+      }
+	  
     } else {
       console.error('No se pudo obtener el tipo de cambio de ninguna de las dos fuentes.');
+	  // Si falla, los montos y el texto de "Última actualización" conservarán 
+      // los valores de la última consulta exitosa.
     }
 
     updateUI();
@@ -526,34 +542,41 @@
     inputSend.addEventListener('input', calculateFromSend);
     inputReceive.addEventListener('input', calculateFromReceive);
 
-    // Función que invierte los valores y actualiza la UI
+    // Función que invierte los valores y LLAMA a la API
     const executeSwap = () => {
       isUsdToPen = !isUsdToPen; 
-      updateUI();
       
       const temp = inputSend.value;
       inputSend.value = inputReceive.value;
       
-      calculateFromSend();
+      // En lugar de solo actualizar la UI con los datos viejos, llamamos a la API.
+      // fetchExchangeRate ya ejecutará updateUI() y calculateFromSend() internamente al terminar.
+      fetchExchangeRate(); 
     };
 
-    // Al botón central ⇅ siempre lo dejamos que invierta los valores
+    // Al botón central ⇅ siempre lo dejamos que invierta los valores y consulte la API
     swapBtn.addEventListener('click', executeSwap);
 
-    // Lógica "Inteligente" para las cajas
+    // Lógica para las cajas (Refrescan la API en cada clic)
     boxBuy.addEventListener('click', () => {
-      // Solo invertimos si actualmente estamos en "Venta" (Soles a Dólares)
       if (!isUsdToPen) {
-        executeSwap();
-      }
+        executeSwap(); // Si estaba en venta, invierte y consulta la API
+      } 
+	  //else {
+      //  fetchExchangeRate(); // Si ya estaba en compra, simplemente consulta la API para refrescar el precio
+      //}
     });
 
     boxSell.addEventListener('click', () => {
-      // Solo invertimos si actualmente estamos en "Compra" (Dólares a Soles)
       if (isUsdToPen) {
-        executeSwap();
-      }
+        executeSwap(); // Si estaba en compra, invierte y consulta la API
+      } 
+	  //else {
+      //  fetchExchangeRate(); // Si ya estaba en venta, simplemente consulta la API para refrescar el precio
+      //}
     });
+	
+	
   });
   
 // Actualiza el enlace de WhatsApp con los datos cotizados y la tasa activa
