@@ -89,21 +89,29 @@
     /* Calculadora */
     .calculator { background: white; padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
     .calculator__rates { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-lg); }
-    .rate-box { background: var(--color-bg-alt); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); text-align: center; flex: 1; }
+	
+	.rate-box { background: var(--color-bg-alt); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); text-align: center; flex: 1; border: 2px solid transparent; transition: all var(--transition); cursor: pointer; }
+    .rate-box:hover:not(.rate-box--active) { background-color: #F8FAFC; border-color: var(--color-border); }
+	
+	.rate-box--active { background-color: #EAF7ED; border-color: var(--color-primary); box-shadow: 0 4px 6px -1px rgba(35, 196, 103, 0.15); }
     .rate-box__label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600; }
     .rate-box__value { font-weight: 700; color: var(--color-accent); margin-top: 2px; }
+	
     .calculator__field { border: 1px solid var(--color-border); padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-sm); }
     .calculator__label { font-size: 0.8rem; color: var(--color-text-muted); display: block; margin-bottom: 2px; }
     .calculator__input { font-size: 1.25rem; font-weight: 700; border: none; width: 100%; outline: none; }
     .calculator__currency { font-weight: 600; color: var(--color-text); padding: 6px 12px; background: var(--color-bg-alt); border-radius: var(--radius-sm); border: 1px solid var(--color-border); }
     .calculator__swap { display: flex; justify-content: center; margin: -26px 0; position: relative; z-index: 1; }
-    .calculator__swap-btn { background: white; border: 1px solid var(--color-border); border-radius: 50%; padding: 8px; color: var(--color-accent); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .calculator__cta { width: 100%; padding: 14px; font-size: 1rem; border-radius: var(--radius-md); margin-top: var(--space-sm); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+   
+	.calculator__swap-btn { background: white; border: 1px solid var(--color-border); border-radius: 50%; padding: 8px; font-size: 1.5rem; color: var(--color-accent); box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all var(--transition); }
+    .calculator__swap-btn:hover { background-color: #EAF7ED; border-color: var(--color-primary); box-shadow: 0 4px 6px -1px rgba(35, 196, 103, 0.15); transform: scale(1.05); }
+   
+	.calculator__cta { width: 100%; padding: 14px; font-size: 1rem; border-radius: var(--radius-md); margin-top: var(--space-sm); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
     .calculator__disclaimer { text-align: center; font-size: 0.75rem; color: var(--color-text-muted); margin-top: var(--space-md); }
 
     /* Steps Section */
-    .steps { padding: var(--space-2xl) 0; background-color: var(--color-bg); }
-    .steps__header { text-align: center; margin-bottom: var(--space-2xl); }
+    .steps { padding: var(--space-xl) 0; background-color: var(--color-bg); }
+    .steps__header { text-align: center; margin-bottom: var(--space-xl); }
     .steps__title { font-size: 2rem; font-weight: 700; margin-bottom: var(--space-xs); }
     .steps__subtitle { color: var(--color-text-muted); }
     .steps__container { display: grid; gap: var(--space-lg); position: relative; }
@@ -124,8 +132,8 @@
     .allied__benefit-icon { color: var(--color-primary); font-size: 1.25rem; }
 
     /* Servicios */
-    .services { padding: var(--space-2xl) 0; background-color: var(--color-bg); }
-    .services__header { text-align: center; margin-bottom: var(--space-xl); }
+    .services { padding: var(--space-xl) 0; background-color: var(--color-bg); }
+    .services__header { text-align: center; margin-bottom: var(--space-lg); }
     .services__grid { display: grid; gap: var(--space-lg); grid-template-columns: 1fr; }
     .service-card { padding: var(--space-lg); background-color: var(--color-bg-alt); border-radius: var(--radius-md); transition: transform var(--transition); }
     .service-card:hover { transform: translateY(-8px); }
@@ -139,7 +147,9 @@
     .footer__link { color: #CBD5E1; transition: color var(--transition); }
     .footer__link:hover { color: var(--color-primary); }
     .footer__bottom { margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: 1px solid #334155; text-align: center; color: var(--color-text-muted); font-size: 0.85rem; }
-
+	
+	.header__cta { display: none; }
+	
     /* ==========================================================================
        7. RESPONSIVE
        ========================================================================== */
@@ -164,6 +174,14 @@
     @media (min-width: 1024px) {
       .services__grid { grid-template-columns: repeat(3, 1fr); }
     }
+	
+	/* Bancos Afiliados */
+    .banks { padding: var(--space-lg) 0; background-color: var(--color-bg); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+    .banks__container { text-align: center; }
+    .banks__title { font-size: 0.9rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); }
+    .banks__grid { display: flex; justify-content: center; align-items: center; gap: var(--space-xl); flex-wrap: wrap; }
+    .bank-card { background: var(--color-bg-alt); border: 1px solid var(--color-border); padding: var(--space-md) var(--space-xl); border-radius: var(--radius-md); font-weight: 700; font-size: 1.25rem; color: var(--color-text); transition: transform var(--transition), border-color var(--transition); }
+    .bank-card:hover { transform: translateY(-3px); border-color: var(--color-primary); }
   </style>
 </head>
 <body>
@@ -186,26 +204,51 @@
         </div>
 
         <div class="calculator">
-          <div class="calculator__rates">
-            <div class="rate-box"><p class="rate-box__label">Compra</p><p class="rate-box__value" id="rate-buy">Cargando...</p></div>
-            <div class="rate-box"><p class="rate-box__label">Venta</p><p class="rate-box__value" id="rate-sell">Cargando...</p></div>
-          </div>
+			<div class="calculator__rates">
+			  <div class="rate-box" id="box-buy">
+				<p class="rate-box__label">Compra</p>
+				<p class="rate-box__value" id="rate-buy">Cargando...</p>
+			  </div>
+			  <div class="rate-box" id="box-sell">
+				<p class="rate-box__label">Venta</p>
+				<p class="rate-box__value" id="rate-sell">Cargando...</p>
+			  </div>
+			</div>
           
           <!-- AQUÍ ESTABAN LOS IDS FALTANTES -->
-          <div class="calculator__field">
-            <div><span class="calculator__label" id="label-send">Tú envías</span><input type="text" id="input-send" class="calculator__input" value="1000"></div>
-            <div class="calculator__currency" id="currency-send">USD ▾</div>
-          </div>
+			<div class="calculator__field">
+			  <div>
+				<span class="calculator__label" id="label-send">Tú envías</span>
+				<div style="display: flex; align-items: center; gap: 4px;">
+				  <span id="symbol-send" style="font-size: 1.25rem; font-weight: 700;">$</span>
+				  <input type="text" id="input-send" class="calculator__input" value="1000">
+				</div>
+			  </div>
+			  <div class="calculator__currency" id="currency-send">USD </div>
+			</div>
+
+			<div class="calculator__swap">
+			  <button type="button" id="swap-btn" class="calculator__swap-btn">⇅</button>
+			</div>
+
+			<div class="calculator__field">
+			  <div>
+				<span class="calculator__label" id="label-receive">Tú recibes</span>
+				<div style="display: flex; align-items: center; gap: 4px;">
+				  <span id="symbol-receive" style="font-size: 1.25rem; font-weight: 700;">S/</span>
+				  <input type="text" id="input-receive" class="calculator__input" value="3755.00">
+				</div>
+			  </div>
+			  <div class="calculator__currency" id="currency-receive">PEN </div>
+			</div>
           
-          <div class="calculator__swap"><button type="button" id="swap-btn" class="calculator__swap-btn">⇅</button></div>
-          
-          <div class="calculator__field">
-            <div><span class="calculator__label" id="label-receive">Tú recibes</span><input type="text" id="input-receive" class="calculator__input" value="3755.00"></div>
-            <div class="calculator__currency" id="currency-receive">PEN ▾</div>
-          </div>
-          
-          <a href="https://wa.me/51941594707" target="_blank" rel="noopener noreferrer" class="button button--primary calculator__cta">Cotizar por WhatsApp</a>
-          <p class="calculator__disclaimer">Tipo de cambio referencial. Sujeto a variaciones del mercado.</p>
+          <a href="https://wa.me/51941594707" target="_blank" rel="noopener noreferrer" class="button button--primary calculator__cta" id="whatsapp-btn">
+			  <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="margin-right: 8px;">
+				<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.67-1.612-.916-2.207-.242-.579-.487-.5-1.127-.5-.075 0-.15 0-.225 0-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.005 0C5.37 0 .002 5.368.002 12.006c0 2.092.548 4.136 1.59 5.928L0 24l6.397-1.677a11.812 11.812 0 005.608 1.429h.001c6.635 0 12.003-5.368 12.003-12.006 0-3.211-1.25-6.236-3.522-8.508z"/>
+			  </svg>
+			  Cotizar por WhatsApp
+			</a>
+		  <p class="calculator__disclaimer">Tipo de cambio referencial. Sujeto a variaciones del mercado.</p>
         </div>
       </div>
     </section>
@@ -233,6 +276,16 @@
             <h3 class="step-title">Recibe</h3>
             <p class="step-description">Verificamos tu depósito y transferimos tu dinero de inmediato.</p>
           </article>
+        </div>
+      </div>
+    </section>
+	
+	<section class="banks">
+      <div class="container banks__container">
+        <h3 class="banks__title">Trabajamos con transferencia bancarias en los principales bancos</h3>
+        <div class="banks__grid">
+          <div class="bank-card">BCP</div>
+          <div class="bank-card">Interbank</div>
         </div>
       </div>
     </section>
@@ -267,8 +320,12 @@
   <footer class="footer" id="contacto">
     <div class="container footer__container">
       <div class="footer__brand">
-        <h2 style="color:white">Cambista Digital</h2>
-        <p class="footer__brand-text">Tu mejor aliado en el cambio de divisas online en Perú.</p>
+        <h2 style="color:white">Cambista Digital SAC</h2>
+        <p class="footer__brand-text" style="margin-bottom: 8px;">Tu mejor aliado en el cambio de divisas online en Perú.</p>
+        <p style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.4;">
+          <strong>RUC:</strong> 20604967393<br>
+          <strong>Resolución SBS:</strong> N° 03379-2025
+        </p>
       </div>
       <div>
         <h3 class="footer__title">Navegación</h3>
@@ -294,7 +351,7 @@
         </ul>
       </div>
     </div>
-    <div class="container footer__bottom">&copy; 2026 Cambista Digital. Todos los derechos reservados.</div>
+    <div class="container footer__bottom">&copy; 2026 Cambista Digital SAC. Todos los derechos reservados.</div>
   </footer>
 
   <script>
@@ -319,8 +376,8 @@
       if (data && data.rates && data.rates.PEN) {
         const baseRate = data.rates.PEN;
         
-        currentBuyRate = (baseRate - 0.03).toFixed(3);
-        currentSellRate = (baseRate + 0.03).toFixed(3);
+        currentBuyRate = (baseRate - 0.005).toFixed(3);
+        currentSellRate = (baseRate + 0.01).toFixed(3);
 
         document.getElementById('rate-buy').textContent = `S/ ${currentBuyRate}`;
         document.getElementById('rate-sell').textContent = `S/ ${currentSellRate}`;
@@ -333,10 +390,29 @@
     calculateFromSend();
   }
 
-  // Actualiza los textos de monedas (USD/PEN) según el sentido de la operación
+// Actualiza los textos de monedas (USD/PEN) y los símbolos ($/S/)
+// Actualiza los textos de monedas (USD/PEN), símbolos y resalta la tasa activa
   function updateUI() {
-    document.getElementById('currency-send').textContent = isUsdToPen ? 'USD ▾' : 'PEN ▾';
-    document.getElementById('currency-receive').textContent = isUsdToPen ? 'PEN ▾' : 'USD ▾';
+    document.getElementById('currency-send').textContent = isUsdToPen ? 'USD' : 'PEN';
+    document.getElementById('currency-receive').textContent = isUsdToPen ? 'PEN' : 'USD';
+    
+    // Actualizamos los símbolos dinámicamente
+    document.getElementById('symbol-send').textContent = isUsdToPen ? '$' : 'S/';
+    document.getElementById('symbol-receive').textContent = isUsdToPen ? 'S/' : '$';
+
+    // Lógica para resaltar Compra o Venta
+    const boxBuy = document.getElementById('box-buy');
+    const boxSell = document.getElementById('box-sell');
+
+    if (isUsdToPen) {
+      // El cliente envía USD, por lo tanto la casa de cambio "Compra"
+      boxBuy.classList.add('rate-box--active');
+      boxSell.classList.remove('rate-box--active');
+    } else {
+      // El cliente envía PEN, por lo tanto la casa de cambio "Vende"
+      boxSell.classList.add('rate-box--active');
+      boxBuy.classList.remove('rate-box--active');
+    }
   }
 
   // Calcula el monto a recibir cuando el usuario escribe cuánto va a enviar
@@ -350,6 +426,8 @@
     } else {
       inputReceive.value = (amount / currentSellRate).toFixed(2);
     }
+	
+	updateWhatsAppLink();
   }
 
   // Calcula el monto a enviar cuando el usuario escribe cuánto quiere recibir exacto
@@ -365,6 +443,8 @@
       // Quiere recibir dólares exactos -> calculamos cuántos soles debe enviar
       inputSend.value = (amount * currentSellRate).toFixed(2);
     }
+	
+	updateWhatsAppLink();
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -373,23 +453,66 @@
     const inputSend = document.getElementById('input-send');
     const inputReceive = document.getElementById('input-receive');
     const swapBtn = document.getElementById('swap-btn');
+    const boxBuy = document.getElementById('box-buy');
+    const boxSell = document.getElementById('box-sell');
 
-    // Escuchamos a ambos inputs
+    // Escuchamos a ambos inputs para recalcular en tiempo real
     inputSend.addEventListener('input', calculateFromSend);
     inputReceive.addEventListener('input', calculateFromReceive);
 
-    swapBtn.addEventListener('click', () => {
+    // Función que invierte los valores y actualiza la UI
+    const executeSwap = () => {
       isUsdToPen = !isUsdToPen; 
       updateUI();
       
-      // Invertimos los valores para una transición fluida
       const temp = inputSend.value;
       inputSend.value = inputReceive.value;
       
-      // Recalculamos desde el campo "Tú envías"
       calculateFromSend();
+    };
+
+    // Al botón central ⇅ siempre lo dejamos que invierta los valores
+    swapBtn.addEventListener('click', executeSwap);
+
+    // Lógica "Inteligente" para las cajas
+    boxBuy.addEventListener('click', () => {
+      // Solo invertimos si actualmente estamos en "Venta" (Soles a Dólares)
+      if (!isUsdToPen) {
+        executeSwap();
+      }
+    });
+
+    boxSell.addEventListener('click', () => {
+      // Solo invertimos si actualmente estamos en "Compra" (Dólares a Soles)
+      if (isUsdToPen) {
+        executeSwap();
+      }
     });
   });
+  
+// Actualiza el enlace de WhatsApp con los datos cotizados y la tasa activa
+  function updateWhatsAppLink() {
+    const inputSend = document.getElementById('input-send').value;
+    const inputReceive = document.getElementById('input-receive').value;
+    const whatsappBtn = document.getElementById('whatsapp-btn');
+    
+    const currencySendText = isUsdToPen ? 'USD' : 'PEN';
+    const currencyReceiveText = isUsdToPen ? 'PEN' : 'USD';
+    const symbolSend = isUsdToPen ? '$' : 'S/';
+    const symbolReceive = isUsdToPen ? 'S/' : '$';
+    
+    // Determinamos qué tasa mostrar según la operación activa (Compra o Venta)
+    const tipoOperacion = isUsdToPen ? 'Compra' : 'Venta';
+    const tasaAplicada = isUsdToPen ? currentBuyRate : currentSellRate;
+    
+    // Armamos el mensaje personalizado con una sola tasa
+    const mensaje = `Hola, deseo realizar una operación:\n- Envío: ${symbolSend} ${inputSend} ${currencySendText}\n- Recibo: ${symbolReceive} ${inputReceive} ${currencyReceiveText}\n- Tipo de cambio (${tipoOperacion}): ${tasaAplicada}`;
+    
+    // Codificamos el texto para que funcione correctamente en la URL de WhatsApp
+    const encodedMessage = encodeURIComponent(mensaje);
+    whatsappBtn.href = `https://wa.me/51941594707?text=${encodedMessage}`;
+  }
+  
 </script>
 
 </body>
