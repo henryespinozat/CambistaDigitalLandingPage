@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Landing Page - Cambista Digital</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. RESET
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; display: block; }
+
+    /* ==========================================================================
+       2. CUSTOM PROPERTIES
+       ========================================================================== */
+    :root {
+      --color-bg: #FFFFFF;
+      --color-bg-alt: #F4F8F5;
+      --color-primary: #23C467;
+      --color-accent: #118144;
+      --color-text: #1E293B;
+      --color-text-muted: #64748B;
+      --color-border: #E2E8F0;
+      --color-shadow: rgba(30, 41, 59, 0.05);
+
+      --font-body: 'Inter', sans-serif;
+
+      --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 32px; --space-xl: 64px; --space-2xl: 96px;
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 24px;
+      --transition: 200ms ease-out;
+    }
+
+    /* ==========================================================================
+       3. BASE
+       ========================================================================== */
+    body { font-family: var(--font-body); color: var(--color-text); background-color: var(--color-bg); line-height: 1.5; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ==========================================================================
+       4. LAYOUT
+       ========================================================================== */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--space-md); }
+
+    /* ==========================================================================
+       5. COMPONENTES
+       ========================================================================== */
+    /* Botones */
+    .button { display: inline-flex; align-items: center; justify-content: center; padding: var(--space-sm) var(--space-md); font-weight: 600; border-radius: var(--radius-sm); transition: background-color var(--transition), color var(--transition), transform var(--transition), border-color var(--transition); text-align: center; }
+    .button--primary { background-color: var(--color-primary); color: var(--color-bg); border: 2px solid var(--color-primary); }
+    .button--primary:hover { background-color: var(--color-accent); border-color: var(--color-accent); }
+
+    /* Header */
+    .header { background-color: var(--color-bg); border-bottom: 1px solid var(--color-bg-alt); position: sticky; top: 0; z-index: 100; width: 100%; }
+    .header__container { display: flex; align-items: center; justify-content: space-between; min-height: 88px; padding-top: var(--space-sm); padding-bottom: var(--space-sm); }
+    .header__logo-img { max-height: 64px; width: auto; }
+    .header__toggle { display: flex; flex-direction: column; justify-content: space-around; width: 28px; height: 24px; z-index: 101; }
+    .header__toggle-bar { width: 100%; height: 3px; background-color: var(--color-text); border-radius: var(--radius-sm); transition: transform var(--transition), opacity var(--transition); transform-origin: left center; }
+    .header__toggle--open .header__toggle-bar:nth-child(1) { transform: rotate(45deg); }
+    .header__toggle--open .header__toggle-bar:nth-child(2) { opacity: 0; }
+    .header__toggle--open .header__toggle-bar:nth-child(3) { transform: rotate(-45deg); }
+    
+    .nav { position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--color-bg); padding: var(--space-md); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity var(--transition), transform var(--transition), visibility var(--transition); }
+    .nav--open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav__list { display: flex; flex-direction: column; gap: var(--space-md); text-align: center; }
+    .nav__link { color: var(--color-text-muted); transition: color var(--transition); }
+    .nav__link:hover { color: var(--color-primary); }
+
+    /* Hero */
+    .hero { background-color: var(--color-bg-alt); padding: var(--space-lg) 0; display: flex; align-items: center; }
+    .hero__container { display: grid; gap: var(--space-xl); grid-template-columns: 1fr; }
+    .hero__title { font-size: 2.5rem; font-weight: 700; line-height: 1.2; margin-bottom: var(--space-md); }
+    .hero__title-accent { color: var(--color-primary); }
+    .hero__description { color: var(--color-text-muted); font-size: 1.1rem; }
+    
+    /* Calculadora */
+    .calculator { background: white; padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+    .calculator__rates { display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-lg); }
+    .rate-box { background: var(--color-bg-alt); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); text-align: center; flex: 1; }
+    .rate-box__label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600; }
+    .rate-box__value { font-weight: 700; color: var(--color-accent); margin-top: 2px; }
+    .calculator__field { border: 1px solid var(--color-border); padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-sm); }
+    .calculator__label { font-size: 0.8rem; color: var(--color-text-muted); display: block; margin-bottom: 2px; }
+    .calculator__input { font-size: 1.25rem; font-weight: 700; border: none; width: 100%; outline: none; }
+    .calculator__currency { font-weight: 600; color: var(--color-text); padding: 6px 12px; background: var(--color-bg-alt); border-radius: var(--radius-sm); border: 1px solid var(--color-border); }
+    .calculator__swap { display: flex; justify-content: center; margin: -26px 0; position: relative; z-index: 1; }
+    .calculator__swap-btn { background: white; border: 1px solid var(--color-border); border-radius: 50%; padding: 8px; color: var(--color-accent); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .calculator__cta { width: 100%; padding: 14px; font-size: 1rem; border-radius: var(--radius-md); margin-top: var(--space-sm); }
+    .calculator__disclaimer { text-align: center; font-size: 0.75rem; color: var(--color-text-muted); margin-top: var(--space-md); }
+
+    /* Steps Section */
+    .steps { padding: var(--space-2xl) 0; background-color: var(--color-bg); }
+    .steps__header { text-align: center; margin-bottom: var(--space-2xl); }
+    .steps__title { font-size: 2rem; font-weight: 700; margin-bottom: var(--space-xs); }
+    .steps__subtitle { color: var(--color-text-muted); }
+    .steps__container { display: grid; gap: var(--space-lg); position: relative; }
+    .steps__line { position: absolute; top: 24px; left: 15%; right: 15%; height: 2px; background: var(--color-border); z-index: 1; display: none; }
+    .step-card { background: var(--color-bg); padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid var(--color-border); text-align: center; position: relative; z-index: 2; }
+    .step-number { width: 48px; height: 48px; background: var(--color-accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md); font-weight: 700; font-size: 1.1rem; }
+    .step-title { font-size: 1.25rem; font-weight: 600; margin-bottom: var(--space-xs); }
+    .step-description { color: var(--color-text-muted); font-size: 0.9rem; }
+
+    /* Allied Section */
+    .allied { padding: var(--space-2xl) 0; background-color: var(--color-bg-alt); }
+    .allied__container { display: grid; gap: var(--space-xl); align-items: center; }
+    .allied__image { border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+    .allied__title { font-size: 2rem; font-weight: 700; margin-bottom: var(--space-md); }
+    .allied__text { color: var(--color-text-muted); margin-bottom: var(--space-lg); }
+    .allied__benefits { display: flex; flex-direction: column; gap: var(--space-md); }
+    .allied__benefit { display: flex; align-items: center; gap: var(--space-sm); font-weight: 500; }
+    .allied__benefit-icon { color: var(--color-primary); font-size: 1.25rem; }
+
+    /* Servicios */
+    .services { padding: var(--space-2xl) 0; background-color: var(--color-bg); }
+    .services__header { text-align: center; margin-bottom: var(--space-xl); }
+    .services__grid { display: grid; gap: var(--space-lg); grid-template-columns: 1fr; }
+    .service-card { padding: var(--space-lg); background-color: var(--color-bg-alt); border-radius: var(--radius-md); transition: transform var(--transition); }
+    .service-card:hover { transform: translateY(-8px); }
+    .service-card__icon { width: 48px; height: 48px; background-color: rgba(35, 196, 103, 0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border-radius: var(--radius-sm); margin-bottom: var(--space-md); }
+
+    /* Footer */
+    .footer { background-color: var(--color-text); color: var(--color-bg); padding: var(--space-2xl) 0 var(--space-lg); }
+    .footer__container { display: grid; gap: var(--space-xl); grid-template-columns: 1fr; }
+    .footer__title { font-size: 1.1rem; margin-bottom: var(--space-md); color: var(--color-primary); }
+    .footer__links { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .footer__link { color: #CBD5E1; transition: color var(--transition); }
+    .footer__link:hover { color: var(--color-primary); }
+    .footer__bottom { margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: 1px solid #334155; text-align: center; color: var(--color-text-muted); font-size: 0.85rem; }
+
+    /* ==========================================================================
+       7. RESPONSIVE
+       ========================================================================== */
+    @media (min-width: 768px) {
+      .header__toggle { display: none; }
+      .nav { position: static; width: auto; padding: 0; box-shadow: none; opacity: 1; visibility: visible; transform: none; background-color: transparent; }
+      .nav__list { flex-direction: row; gap: var(--space-lg); }
+      .header__cta { display: block; }
+      
+      .hero__container { grid-template-columns: 1fr 1fr; align-items: center; }
+      .hero__title { font-size: 3.5rem; }
+      
+      .steps__line { display: block; }
+      .steps__container { grid-template-columns: repeat(3, 1fr); }
+      
+      .allied__container { grid-template-columns: 1fr 1fr; }
+
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+      .footer__container { grid-template-columns: 2fr 1fr 1fr; }
+    }
+
+    @media (min-width: 1024px) {
+      .services__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__container">
+      <a href="#" class="header__logo"><img src="images\logo.png" alt="Logo de Cambista Digital" class="header__logo-img"></a>
+      <button id="menu-toggle" class="header__toggle"><span class="header__toggle-bar"></span><span class="header__toggle-bar"></span><span class="header__toggle-bar"></span></button>
+      <nav id="main-nav" class="nav"><ul class="nav__list"><li class="nav__item"><a href="#inicio" class="nav__link">Inicio</a></li><li class="nav__item"><a href="#servicios" class="nav__link">Servicios</a></li><li class="nav__item"><a href="#nosotros" class="nav__link">Nosotros</a></li><li class="nav__item"><a href="#contacto" class="nav__link">Contacto</a></li></ul></nav>
+      <div class="header__cta"><a href="#empezar" class="button button--primary">Empezar ahora</a></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero__container">
+        <div class="hero__content">
+          <h1 class="hero__title">Cambia tus dólares con el <span class="hero__title-accent">mejor tipo de cambio</span></h1>
+          <p class="hero__description">Rápido, seguro y 100% digital.</p>
+        </div>
+
+        <div class="calculator">
+          <div class="calculator__rates">
+            <div class="rate-box"><p class="rate-box__label">Compra</p><p class="rate-box__value">S/ 3.755</p></div>
+            <div class="rate-box"><p class="rate-box__label">Venta</p><p class="rate-box__value">S/ 3.785</p></div>
+          </div>
+          
+          <div class="calculator__field">
+            <div><span class="calculator__label">Tú envías</span><input type="text" class="calculator__input" value="1000"></div>
+            <div class="calculator__currency">USD ▾</div>
+          </div>
+          
+          <div class="calculator__swap"><button class="calculator__swap-btn">⇅</button></div>
+          
+          <div class="calculator__field">
+            <div><span class="calculator__label">Tú recibes</span><input type="text" class="calculator__input" value="3755.00" readonly></div>
+            <div class="calculator__currency">PEN ▾</div>
+          </div>
+          
+          <button class="button button--primary calculator__cta">Cotizar por WhatsApp</button>
+          <p class="calculator__disclaimer">Tipo de cambio referencial. Sujeto a variaciones del mercado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps">
+      <div class="container">
+        <header class="steps__header">
+          <h2 class="steps__title">Un proceso simple de 3 pasos</h2>
+          <p class="steps__subtitle">Cambia tus divisas sin complicaciones ni demoras.</p>
+        </header>
+        <div class="steps__container">
+          <div class="steps__line"></div>
+          <article class="step-card">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Cotiza</h3>
+            <p class="step-description">Calcula el monto y envíanos un mensaje por WhatsApp para confirmar la operación.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">2</div>
+            <h3 class="step-title">Transfiere</h3>
+            <p class="step-description">Realiza la transferencia desde tu banco a nuestras cuentas seguras.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">3</div>
+            <h3 class="step-title">Recibe</h3>
+            <p class="step-description">Verificamos tu depósito y transferimos tu dinero de inmediato.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="allied">
+      <div class="container allied__container">
+        <div class="allied__image"><img src="images\trabajoenequipo.jpg" alt="Equipo trabajando en oficina"></div>
+        <div class="allied__content">
+          <h2 class="allied__title">Tu aliado estratégico financiero</h2>
+          <p class="allied__text">Diseñado tanto para personas naturales como para empresas que buscan optimizar sus finanzas. Ofrecemos tasas preferenciales para montos altos y una atención personalizada que garantiza el éxito de tus operaciones cambiarias.</p>
+          <ul class="allied__benefits">
+            <li class="allied__benefit"><span class="allied__benefit-icon">✔</span> Facturación electrónica disponible</li>
+            <li class="allied__benefit"><span class="allied__benefit-icon">✔</span> Tasas especiales para empresas</li>
+            <li class="allied__benefit"><span class="allied__benefit-icon">✔</span> Atención al cliente dedicada</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="servicios">
+      <div class="container">
+        <header class="services__header"><h2 class="services__title">¿Por qué elegirnos?</h2></header>
+        <div class="services__grid">
+          <article class="service-card"><div class="service-card__icon">⚡</div><h3 class="service-card__title">Rápido y Fácil</h3><p>Operaciones en minutos.</p></article>
+          <article class="service-card"><div class="service-card__icon">🔒</div><h3 class="service-card__title">100% Seguro</h3><p>Regulados por la SBS.</p></article>
+          <article class="service-card"><div class="service-card__icon">💎</div><h3 class="service-card__title">Mejor Cotización</h3><p>Tipo de cambio real.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <h2 style="color:white">Cambista Digital</h2>
+        <p class="footer__brand-text">Tu mejor aliado en el cambio de divisas online en Perú.</p>
+      </div>
+      <div>
+        <h3 class="footer__title">Navegación</h3>
+        <ul class="footer__links">
+          <li><a href="#" class="footer__link">Inicio</a></li>
+          <li><a href="#" class="footer__link">Servicios</a></li>
+          <li><a href="#" class="footer__link">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer__title">Legal</h3>
+        <ul class="footer__links">
+          <li><a href="#" class="footer__link">Términos y condiciones</a></li>
+          <li><a href="#" class="footer__link">Política de privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer__bottom">&copy; 2026 Cambista Digital. Todos los derechos reservados.</div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('header__toggle--open');
+      mainNav.classList.toggle('nav--open');
+    });
+  </script>
+</body>
+</html>
