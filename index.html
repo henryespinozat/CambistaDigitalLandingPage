@@ -378,7 +378,8 @@
 
   async function fetchExchangeRate() {
     try {
-      const response = await fetch('https://open.er-api.com/v6/latest/USD');
+      // Agregamos Date.now() para evitar que el navegador o Cloudflare devuelvan el caché
+      const response = await fetch(`https://open.er-api.com/v6/latest/USD?t=${Date.now()}`);
       const data = await response.json();
       
       if (data && data.rates && data.rates.PEN) {
@@ -456,7 +457,14 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+	// 1. Carga inicial
     fetchExchangeRate();
+
+    // 2. Refresco automático cada 5 minutos (300,000 ms)
+    setInterval(fetchExchangeRate, 300000);
+
+    // 3. Refresco cuando el usuario vuelve a la pestaña (evento focus)
+    window.addEventListener('focus', fetchExchangeRate);
 
     const inputSend = document.getElementById('input-send');
     const inputReceive = document.getElementById('input-receive');
