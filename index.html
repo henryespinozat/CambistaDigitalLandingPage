@@ -264,8 +264,7 @@
 			  Enviar cotización
 			</a>
 		  <p class="calculator__disclaimer">
-			  Tipo de cambio referencial. Sujeto a variaciones del mercado.<br>
-			  <span id="last-update" style="color: var(--color-primary); font-weight: 500;"></span>
+			  TC Referencial. <span id="last-update" style="color: var(--color-primary); font-weight: 500;"></span>
 			</p>
         </div>
       </div>
@@ -391,7 +390,8 @@
   async function fetchExchangeRate() {
     let refBuy = null;
     let refSell = null;
-
+	let periodicidadTC = '';
+	
     // -------------------------------------------------------------
     // 1. INTENTO PRINCIPAL: Cloudfront API
     // -------------------------------------------------------------
@@ -405,6 +405,9 @@
           if (reference && reference.rates) {
             refBuy = parseFloat(reference.rates.buy.cost);
             refSell = parseFloat(reference.rates.sale.cost);
+			
+			// Guardamos el título de la peridicidad (o un texto por defecto)
+            periodicidadTC = 'en linea';
           }
         }
       }
@@ -427,6 +430,9 @@
             // Asignamos esa tasa base tanto a la compra como a la venta.
             refBuy = baseRate; //ojo esta api solo maneja un tipo de cambio. No esta diferenciado por compra o venta
             refSell = baseRate; //ojo esta api solo maneja un tipo de cambio. No esta diferenciado por compra o venta
+			
+			// Guardamos el nombre 
+            periodicidadTC = 'del día';
           }
         }
       } catch (error) {
@@ -447,12 +453,12 @@
 	  
 	  // AQUÍ: Solo actualizamos la fecha/hora si realmente obtuvimos datos nuevos con éxito
       const now = new Date();
-      const timeString = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      const dateString = now.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const timeString = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+      const dateString = now.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
       
       const lastUpdateEl = document.getElementById('last-update');
       if (lastUpdateEl) {
-        lastUpdateEl.textContent = `Última actualización: ${dateString} ${timeString}`;
+        lastUpdateEl.textContent = `Actualizado al ${dateString} ${timeString} (${periodicidadTC})`;
       }
 	  
     } else {
