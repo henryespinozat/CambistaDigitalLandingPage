@@ -444,9 +444,55 @@
     // 3. PROCESAMIENTO Y ACTUALIZACIÓN DE INTERFAZ
     // -------------------------------------------------------------
     if (refBuy !== null && refSell !== null) {
+
+      let margenBuy = 0.000;
+      let margenSell = 0.000;
+
+      //calculamos los margenes en funcion a la dia/hora
+      const ahora = new Date();
+      const peru = new Date(
+          ahora.toLocaleString("en-US", {
+              timeZone: "America/Lima"
+          })
+      );
+
+      const dia = peru.getDay();
+      const minutos = peru.getHours() * 60 + peru.getMinutes();
+
+      if (dia >= 1 && dia <= 5 && minutos >= 550 && minutos < 1080) {
+          // Lunes a viernes, 09:10 hasta antes de 18:00
+          margenBuy = 0.002;
+          margenSell = 0.01;
+          console.log(
+              'En horario de mercado.',
+              'margenBuy:', margenBuy,
+              'margenSell:', margenSell
+          );
+      }
+      else if (dia === 6 && minutos >= 550 && minutos < 780) {
+          // Sábado, 09:10 hasta antes de 13:00
+          margenBuy = 0.002;
+          margenSell = 0.01;
+          console.log(
+              'En horario de mercado.',
+              'margenBuy:', margenBuy,
+              'margenSell:', margenSell
+          );
+      }
+      else {
+          // Domingo, fuera de horario, etc.
+          margenBuy = 0.003;
+          margenSell = 0.012;
+          console.log(
+              'Fuera de horario de mercado.',
+              'margenBuy:', margenBuy,
+              'margenSell:', margenSell
+          );
+      }
+
       // Aplicamos tus márgenes
-      currentBuyRate = (refBuy - 0.002).toFixed(3);
-      currentSellRate = (refSell + 0.01).toFixed(3);
+      currentBuyRate = (refBuy - margenBuy).toFixed(3);
+      currentSellRate = (refSell + margenSell).toFixed(3);
 
       document.getElementById('rate-buy').textContent = `S/ ${currentBuyRate}`;
       document.getElementById('rate-sell').textContent = `S/ ${currentSellRate}`;
@@ -463,7 +509,7 @@
 	  
     } else {
       console.error('No se pudo obtener el tipo de cambio de ninguna de las dos fuentes.');
-	  // Si falla, los montos y el texto de "Última actualización" conservarán 
+	    // Si falla, los montos y el texto de "Última actualización" conservarán 
       // los valores de la última consulta exitosa.
     }
 
